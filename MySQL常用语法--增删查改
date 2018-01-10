@@ -1,0 +1,127 @@
+--------------------------------------------- add --------------------------------------------------------
+
+-- 创建表
+create table t_newMySQL (
+	Id int primary key auto_increment comment '编号',  # 整型 主键 自增长
+	name varchar(18) NOT NULL comment '姓名',  	
+	description varchar(100) comment '描述'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 comment = 'mysql临时表';
+
+-- 增加字段
+alter table t_newMySQL 
+add age int(4)  comment '年龄',
+add class varchar(14) default '信安2班' comment '班级名称',
+add cardNo varchar(18) comment '身份证号'; 
+
+-- 添加索引
+
+-- 1. 添加普通索引
+alter table t_newMySQL 
+add index name_index (name),
+add index idx2 (name, description); 
+
+-- 2. 添加联合索引
+alter table t_newMySQL add unique unique_name (idNo,name);
+
+-- 3. 添加主键
+alter table t_newMySQL add primary key (id) ;
+
+
+-- 新增n条数据 
+
+-- 1. 新增所有字段数据
+insert into t_newMySQL values ('',1,"JWT","2",9,""),('',2,"DEF","3",10,"");
+
+-- 2. 新增指定字段数据
+insert into t_newMySQL (name, age) values ("ghk",5),("lmn",4);
+
+--------------------------------------------- delete --------------------------------------------------------
+
+-- 删除数据表
+drop table t_newMySQL;
+
+-- 删除字段
+alter table t_newMySQL drop column age,drop column class;
+
+-- 删除索引
+
+-- 1. 删除普通索引 & 联合索引
+drop index idNo on t_newMySQL;
+
+-- 2. 删除主键
+alter table t_newMySQL drop primary key;
+
+-- 根据条件删除数据
+delete from t_newMySQL where id > 3;
+
+-- 删除所有数据
+
+-- 1. 逐条删除所有数据
+delete from t_newMySQL;
+
+-- 2. 先直接删除表，再重建表
+truncate table t_newMySQL;
+
+-- 删除数据库
+drop database bdm26813010_db;
+
+--------------------------------------------- query --------------------------------------------------------
+
+-- 根据条件查询表中数据
+
+-- 1. 升序(默认)
+select * from t_newMySQL order by age;
+
+-- 2. 降序
+select * from t_newMySQL order by age desc;
+
+-- 列出所有表
+show tables;
+
+-- 列出所有数据库
+show databases;
+
+-- 查询指定表的相关信息
+select column_name,data_type,column_comment,is_nullable,column_key from information_schema.columns where table_schema='bdm26813010_db' and table_name='t_newMySQL';
+
+-- 查询表的注释
+select table_comment from information_schema.tables where table_schema='bdm26813010_db' and table_name='t_newMySQL';
+
+-- 列出表结构
+desc t_newMySQL;
+
+-- 查询表的注释（相关信息）
+select table_comment from information_schema.tables where table_schema='bdm26813010_db' and table_name='t_newMySQL';
+
+
+
+
+--------------------------------------------- update --------------------------------------------------------
+
+-- 修改字段名称和属性
+ALTER TABLE t_newMySQL CHANGE idNo idNo varchar(18) comment '身份证号';
+
+-- 修改字段属性
+ALTER TABLE t_newMySQL MODIFY name VARCHAR(10) NOT NULL;
+
+alter table t_newMySQL MODIFY id int(11) comment '编号';
+
+-- 移动字段位置
+
+-- 1. 字段description移动到字段idNo后面
+ALTER TABLE t_newMySQL MODIFY description varchar(100) AFTER idNo comment '描述';
+
+-- 2. 字段移动到第一位
+ALTER TABLE t_newMySQL MODIFY idNo varchar(18) NOT NULL comment '身份证号' FIRST;
+
+-- 更新数据
+update t_newMySQL set age='23',class='' where id=1;
+
+-- 修改表相关信息
+
+-- 1. 修改自增初始值
+alter table t_newMySQL AUTO_INCREMENT=8;
+
+-- 2. 修改表名
+alter table t_newMySql rename t_newMySQL;
+
