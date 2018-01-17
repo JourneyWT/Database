@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="jdbc"></transactionManager>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <!--数据库连接字符串，db_newSQL为t_User表所在的数据库名-->
+                <property name="url" value="jdbc:mysql://bdm26813010.my3w.com/bdm26813010_db"/>
+                <!--数据库登录名-->
+                <property name="username" value="bdm26813010"/>
+                <property name="password" value="bdm26813010"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <mapper resource="com.jwt.mybatis1.mappers/userMapper.xml" />
+    </mappers>
+</configuration>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 与dao层mapper对应 -->
+<mapper namespace="com.jwt.mybatis1.dao.UserMapper">
+
+    <insert id="insertUser" parameterType="com.jwt.mybatis1.bo.User">
+
+        insert into t_User (id,idNo,name,age,class,description) values (#{id},#{idNo},#{name},#{age},#{className},#{description});
+
+    </insert>
+
+    <update id="deleteByName" parameterType="java.lang.String">
+
+        delete from t_User where name=#{name};
+
+    </update>
+
+    <select id="selectUserById" parameterType="java.lang.String" resultType="com.jwt.mybatis1.bo.User">
+
+        select id,idNo,name,age,class,description from t_User where idNo=#{idnumber}
+
+    </select>
+
+    <update id="updateByAge" parameterType="com.jwt.mybatis1.bo.User">
+
+        update t_User set description=#{User.description} where age=#{updateAge}
+
+    </update>
+
+</mapper>

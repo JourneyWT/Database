@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ContentFilters</key>
+	<dict/>
+	<key>auto_connect</key>
+	<true/>
+	<key>data</key>
+	<dict>
+		<key>connection</key>
+		<dict>
+			<key>database</key>
+			<string>bdm26813010_db</string>
+			<key>host</key>
+			<string>bdm26813010.my3w.com</string>
+			<key>kcid</key>
+			<string>6054053042740232834</string>
+			<key>name</key>
+			<string>MyWebsite</string>
+			<key>rdbms_type</key>
+			<string>mysql</string>
+			<key>sslCACertFileLocation</key>
+			<string></string>
+			<key>sslCACertFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslCertificateFileLocation</key>
+			<string></string>
+			<key>sslCertificateFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslKeyFileLocation</key>
+			<string></string>
+			<key>sslKeyFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>type</key>
+			<string>SPTCPIPConnection</string>
+			<key>useSSL</key>
+			<integer>0</integer>
+			<key>user</key>
+			<string>bdm26813010</string>
+		</dict>
+		<key>session</key>
+		<dict>
+			<key>connectionEncoding</key>
+			<string>utf8</string>
+			<key>contentFilter</key>
+			<dict/>
+			<key>contentPageNumber</key>
+			<integer>1</integer>
+			<key>contentSelection</key>
+			<data>
+			YnBsaXN0MDDUAQIDBAUGOjtYJHZlcnNpb25YJG9iamVjdHNZJGFy
+			Y2hpdmVyVCR0b3ASAAGGoK8QDwcIFRYXGBkfICEoLDA0OFUkbnVs
+			bNMJCgsMEBRXTlMua2V5c1pOUy5vYmplY3RzViRjbGFzc6MNDg+A
+			AoADgASjERITgAWABoAKgA5UdHlwZVRyb3dzVGtleXNfECZTZWxl
+			Y3Rpb25EZXRhaWxUeXBlUHJpbWFyeUtleWVkRGV0YWlsc9MJCgsa
+			HB6hG4AHoR2ACIAJUTEJ0iIjJCVaJGNsYXNzbmFtZVgkY2xhc3Nl
+			c18QE05TTXV0YWJsZURpY3Rpb25hcnmjJCYnXE5TRGljdGlvbmFy
+			eVhOU09iamVjdNIKCykroSqAC4AN0gstLi9ZTlMuc3RyaW5ngAxS
+			aWTSIiMxMl8QD05TTXV0YWJsZVN0cmluZ6MxMydYTlNTdHJpbmfS
+			IiM1Nl5OU011dGFibGVBcnJheaM1NydXTlNBcnJhedIiIyY5oiYn
+			XxAPTlNLZXllZEFyY2hpdmVy0Tw9VGRhdGGAAQAIABEAGgAjAC0A
+			MgA3AEkATwBWAF4AaQBwAHQAdgB4AHoAfgCAAIIAhACGAIsAkACV
+			AL4AxQDHAMkAywDNAM8A0QDSANcA4gDrAQEBBQESARsBIAEiASQB
+			JgErATUBNwE6AT8BUQFVAV4BYwFyAXYBfgGDAYYBmAGbAaAAAAAA
+			AAACAQAAAAAAAAA+AAAAAAAAAAAAAAAAAAABog==
+			</data>
+			<key>contentSortColIsAsc</key>
+			<true/>
+			<key>contentViewport</key>
+			<string>{{0, 0}, {1135, 565}}</string>
+			<key>isToolbarVisible</key>
+			<true/>
+			<key>queries</key>
+			<string>--------------------------------------------- add --------------------------------------------------------
+
+-- 创建表
+create table t_newMySQL (
+	Id int primary key auto_increment comment '编号',  # 整型 主键 自增长
+	name varchar(18) NOT NULL comment '姓名',  	
+	description varchar(100) comment '描述'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 comment = 'mysql临时表';
+
+-- 增加字段
+alter table t_newMySQL 
+add age int(4)  comment '年龄',
+add class varchar(14) default '信安2班' comment '班级名称',
+add cardNo varchar(18) comment '身份证号'; 
+
+-- 添加索引
+
+-- 1. 添加普通索引
+alter table t_newMySQL 
+add index name_index (name),
+add index idx2 (name, description); 
+
+-- 2. 添加联合索引
+alter table t_newMySQL add unique unique_name (idNo,name);
+
+-- 3. 添加主键
+alter table t_newMySQL add primary key (id) ;
+
+
+-- 新增n条数据 
+
+-- 1. 新增所有字段数据
+insert into t_newMySQL values ('',1,"JWT","2",9,""),('',2,"DEF","3",10,"");
+
+-- 2. 新增指定字段数据
+insert into t_newMySQL (name, age) values ("ghk",5),("lmn",4);
+
+--------------------------------------------- delete --------------------------------------------------------
+
+-- 删除数据表
+drop table t_newMySQL;
+
+-- 删除字段
+alter table t_newMySQL drop column age,drop column class;
+
+-- 删除索引
+
+-- 1. 删除普通索引 &amp; 联合索引
+drop index idNo on t_newMySQL;
+
+-- 2. 删除主键
+alter table t_newMySQL drop primary key;
+
+-- 根据条件删除数据
+delete from t_newMySQL where id &gt; 3;
+
+-- 删除所有数据
+
+-- 1. 逐条删除所有数据
+delete from t_newMySQL;
+
+-- 2. 先直接删除表，再重建表
+truncate table t_newMySQL;
+
+-- 删除数据库
+drop database bdm26813010_db;
+
+--------------------------------------------- query --------------------------------------------------------
+
+-- 根据条件查询表中数据
+
+-- 1. 升序(默认)
+select * from t_newMySQL order by age;
+
+-- 2. 降序
+select * from t_newMySQL order by age desc;
+
+-- 列出所有表
+show tables;
+
+-- 列出所有数据库
+show databases;
+
+-- 查询指定表的相关信息
+select column_name,data_type,column_comment,is_nullable,column_key from information_schema.columns where table_schema='bdm26813010_db' and table_name='t_newMySQL';
+
+-- 查询表的注释
+select table_comment from information_schema.tables where table_schema='bdm26813010_db' and table_name='t_newMySQL';
+
+-- 列出表结构
+desc t_newMySQL;
+
+-- 查询表的注释（相关信息）
+select table_comment from information_schema.tables where table_schema='bdm26813010_db' and table_name='t_newMySQL';
+
+
+
+
+--------------------------------------------- update --------------------------------------------------------
+
+-- 修改字段名称和属性
+ALTER TABLE t_newMySQL CHANGE idNo idNo varchar(18) comment '身份证号';
+
+-- 修改字段属性
+ALTER TABLE t_newMySQL MODIFY name VARCHAR(10) NOT NULL;
+
+alter table t_newMySQL MODIFY id int(11) comment '编号';
+
+-- 移动字段位置
+
+-- 1. 字段description移动到字段idNo后面
+ALTER TABLE t_newMySQL MODIFY description varchar(100) AFTER idNo comment '描述';
+
+-- 2. 字段移动到第一位
+ALTER TABLE t_newMySQL MODIFY idNo varchar(18) NOT NULL comment '身份证号' FIRST;
+
+-- 更新数据
+update t_newMySQL set age='23',class='' where id=1;
+
+-- 修改表相关信息
+
+-- 1. 修改自增初始值
+alter table t_newMySql AUTO_INCREMENT=8;
+
+-- 2. 修改表名
+alter table t_newMySql rename t_newMySQL;
+
+</string>
+			<key>table</key>
+			<string>t_blogtype</string>
+			<key>view</key>
+			<string>SP_VIEW_CUSTOMQUERY</string>
+			<key>windowVerticalDividerPosition</key>
+			<real>145</real>
+		</dict>
+	</dict>
+	<key>encrypted</key>
+	<false/>
+	<key>format</key>
+	<string>connection</string>
+	<key>queryFavorites</key>
+	<array/>
+	<key>queryHistory</key>
+	<array>
+		<string>-- 修改表相关信息
+
+-- 1. 修改自增初始值
+alter table t_blog AUTO_INCREMENT=8</string>
+		<string>alter table t_newMySQL MODIFY id int(11) comment '编号'</string>
+		<string>alter table t_newMySQL drop primary key</string>
+		<string>update t_newMySQL set age='23',class='' where id=1</string>
+		<string>-- 更新数据
+update t_newMySQL set age='23',class=' ' where id=1</string>
+		<string>insert into t_newMySQL values ('',1,"JWT","2",9,""),('',2,"DEF","3",10,"")</string>
+		<string>insert into t_newMySQL values (5,"JWT","2",9,""),(6,"DEF","3",10,"")</string>
+		<string>-- 删除所有数据
+truncate table t_newMySQL</string>
+		<string>alter table t_newMySQL add unique unique_name (idNo,name)</string>
+		<string>-- 删除索引
+
+-- 1. 删除普通索引 &amp; 联合索引
+drop index idNo on t_newMySQL</string>
+		<string>alter table t_newMySQL add unique (unique_name,name)</string>
+		<string>alter table t_newMySQL add unique (idNo,name)</string>
+		<string>-- 根据条件删除数据
+
+delete from t_newMySQL where id &gt; 3</string>
+		<string>alter table t_newMySQL add unique (idNo)</string>
+		<string>-- 删除索引
+drop primary key on t_newMySQL</string>
+		<string>-- 删除索引
+drop index idx2 on t_newMySQL</string>
+		<string>alter table t_newMySql rename t_newMySQL</string>
+		<string>drop index idx2 on t_newMySQL</string>
+		<string>-- 2. 修改表名
+alter table t_newSQL； rename t_newMySql</string>
+		<string>alter table t_newSQL;
+rename t_newMySql</string>
+	</array>
+	<key>rdbms_type</key>
+	<string>mysql</string>
+	<key>rdbms_version</key>
+	<string>5.1.73</string>
+	<key>version</key>
+	<integer>1</integer>
+</dict>
+</plist>
